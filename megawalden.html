@@ -101,13 +101,14 @@
             margin-top: 20px;
         }
 
-        .form-placeholder {
+        /* Google Form Styling */
+        .form-section iframe {
+            width: 100%;
+            max-width: 700px;
+            height: 800px;
+            border: none;
+            border-radius: 10px;
             margin-top: 20px;
-            padding: 40px;
-            border: 2px dashed #000;
-            text-align: center;
-            font-size: 20px;
-            color: #555;
         }
 
         /* Responsive */
@@ -119,6 +120,10 @@
 
             .text-section {
                 text-align: center;
+            }
+
+            .form-section iframe {
+                height: 1000px;
             }
         }
 
@@ -157,9 +162,16 @@
                 You can choose on how to decorate it and make it fit your personal needs.
             </p>
             <h1 class="order-heading">Order the mega walden now</h1>
-            <div class="form-placeholder">
-                (I will embed a google form here)
+
+            <!-- Google Form Embed -->
+            <div class="form-section">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeoHWapqd6kjX2W2khwsZVMw8uClSCbHx1flbGEG-x2fuDqkA/viewform?embedded=true" 
+                        width="640" height="713" 
+                        frameborder="0" marginheight="0" marginwidth="0">
+                    Loading…
+                </iframe>
             </div>
+
         </div>
     </div>
 
