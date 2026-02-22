@@ -1,1 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>D.P.C</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #e6e6e6;
+            text-align: center;
+        }
 
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: white;
+            border-bottom: 3px solid black;
+        }
+
+        .logo {
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin-top: 40px;
+            font-size: 42px;
+        }
+
+        .products {
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .product {
+            max-width: 300px;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: #ccc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .product p {
+            font-size: 22px;
+            margin-top: 15px;
+        }
+
+        .underline {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="logo">D.P.C 🔍</div>
+        <div class="nav-links">
+            <a href="#">About</a>
+            <a href="#">Products</a>
+            <a href="#">Jobs</a>
+        </div>
+    </div>
+
+    <h1>Browse our top hits</h1>
+
+    <div class="products">
+        
+        <div class="product">
+            <div class="image-placeholder">Airplane.jpg</div>
+            <p class="underline">The Mega Walden</p>
+        </div>
+
+        <div class="product">
+            <div class="image-placeholder">Plushie.webp</div>
+            <p>Blox fruit plushies (coming soon)</p>
+        </div>
+
+        <div class="product">
+            <div class="image-placeholder">origami.jpeg</div>
+            <p>Origami D.I.Y products</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
