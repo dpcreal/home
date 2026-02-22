@@ -44,14 +44,11 @@
             font-weight: bold;
         }
 
-        .nav-links a {
-            text-decoration: none;
-            color: black;
+        /* Nav items that do nothing */
+        .nav-links span {
             font-size: 18px;
-        }
-
-        .nav-links a:hover {
-            text-decoration: underline;
+            color: black;
+            cursor: default;
         }
 
         /* Google Search Box */
@@ -138,7 +135,6 @@
                 height: 1000px;
             }
         }
-
     </style>
 </head>
 
@@ -152,9 +148,9 @@
         <div class="gcse-search"></div>
 
         <div class="nav-links">
-            <a href="index.html">about</a>
-            <a href="index.html">products</a>
-            <a href="index.html">jobs</a>
+            <span>about</span>
+            <span>products</span>
+            <span>jobs</span>
         </div>
     </div>
 
