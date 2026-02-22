@@ -25,9 +25,17 @@
             gap: 20px;
         }
 
+        /* CLICKABLE LOGO */
         .logo {
             font-size: 32px;
             font-weight: bold;
+            text-decoration: none;
+            color: black;
+            transition: opacity 0.2s ease;
+        }
+
+        .logo:hover {
+            opacity: 0.7;
         }
 
         .nav-links {
@@ -40,6 +48,10 @@
             text-decoration: none;
             color: black;
             font-size: 18px;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
         }
 
         /* Google Search Box */
@@ -134,7 +146,7 @@
 
     <!-- Navbar -->
     <div class="navbar">
-        <div class="logo">D.P.C</div>
+        <a href="index.html" class="logo">D.P.C</a>
 
         <!-- Google Search Box -->
         <div class="gcse-search"></div>
@@ -161,13 +173,12 @@
                 The megawalden has made its duty to make us remember him with the decorations and the high quality plane. 
                 You can choose on how to decorate it and make it fit your personal needs.
             </p>
+
             <h1 class="order-heading">Order the mega walden now</h1>
 
             <!-- Google Form Embed -->
             <div class="form-section">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeoHWapqd6kjX2W2khwsZVMw8uClSCbHx1flbGEG-x2fuDqkA/viewform?embedded=true" 
-                        width="640" height="713" 
-                        frameborder="0" marginheight="0" marginwidth="0">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeoHWapqd6kjX2W2khwsZVMw8uClSCbHx1flbGEG-x2fuDqkA/viewform?embedded=true">
                     Loading…
                 </iframe>
             </div>
