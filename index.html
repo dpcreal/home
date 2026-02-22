@@ -3,6 +3,9 @@
 <head>
     <title>D.P.C</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Programmable Search -->
+    <script async src="https://cse.google.com/cse.js?cx=62917397b01324b67"></script>
     
     <style>
         body {
@@ -19,11 +22,17 @@
             padding: 20px;
             background-color: white;
             border-bottom: 3px solid black;
+            gap: 20px;
         }
 
         .logo {
             font-size: 40px;
             font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
         }
 
         .nav-links a {
@@ -32,6 +41,11 @@
             font-size: 22px;
             color: black;
             font-weight: bold;
+        }
+
+        /* Makes search fit nicely */
+        .gcse-search {
+            width: 300px;
         }
 
         h1 {
@@ -51,7 +65,6 @@
             max-width: 300px;
         }
 
-        /* 🔥 THIS FIXES THE UNEVEN IMAGES */
         .product img {
             width: 300px;
             height: 250px;
@@ -74,6 +87,10 @@
 
     <div class="navbar">
         <div class="logo">D.P.C 🔍</div>
+
+        <!-- Google Search Box -->
+        <div class="gcse-search"></div>
+
         <div class="nav-links">
             <a href="#">About</a>
             <a href="#">Products</a>
