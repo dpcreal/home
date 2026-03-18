@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Place an Order | Woodpecker Inc</title>
+  <meta name="description" content="Place a custom order with Woodpecker Inc for handmade wooden products." />
+  <style>
+    :root {
+      --bg: #f7f5f2;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #7c4a22;
+      --primary-dark: #5f3617;
+      --border: #e5ded7;
+      --shadow: 0 16px 40px rgba(31, 41, 55, 0.08);
+      --radius: 22px;
+      --max: 980px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #faf8f5 0%, #f7f5f2 100%);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(100% - 2rem, var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      padding: 1.25rem 0;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .hero {
+      padding: 1rem 0 2rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(124, 74, 34, 0.08);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin: 0 0 0.8rem;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 60ch;
+      margin: 0;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.2rem;
+      padding-bottom: 3rem;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      font-size: 1.5rem;
+    }
+
+    .panel p {
+      color: var(--muted);
+      margin-top: 0;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .field {
+      display: grid;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 0.96rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 0.95rem 1rem;
+      font: inherit;
+      color: var(--text);
+      background: #fff;
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid rgba(124, 74, 34, 0.18);
+      border-color: var(--primary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.35rem;
+      border-radius: 999px;
+      border: 0;
+      font-weight: 800;
+      cursor: pointer;
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .note {
+      margin-top: 1rem;
+      font-size: 0.94rem;
+      color: var(--muted);
+    }
+
+    .info-list {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 1.2rem;
+    }
+
+    .info-item {
+      padding: 0.95rem 1rem;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: #fcfbfa;
+    }
+
+    .info-item strong {
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .success {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 18px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      color: #166534;
+      font-weight: 600;
+    }
+
+    footer {
+      padding: 0 0 2.5rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .layout,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container topbar">
+    <a class="back-link" href="index.html">← Back to homepage</a>
+  </div>
+
+  <main class="container">
+    <section class="hero">
+      <div class="tag">Custom Orders</div>
+      <h1>Place your custom wood order</h1>
+      <p>
+        Tell us what you want built, share the size or style you have in mind, and send your request to Woodpecker Inc.
+        This page is set up as a clean starter order form for GitHub Pages.
+      </p>
+    </section>
+
+    <section class="layout">
+      <div class="panel">
+        <h2>Order form</h2>
+        <p>Fill out the details below so we can understand your custom request.</p>
+
+        <form id="orderForm" action="https://formsubmit.co/youremail@example.com" method="POST">
+          <input type="hidden" name="_subject" value="New Woodpecker Inc Order Request" />
+          <input type="hidden" name="_captcha" value="false" />
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">Full name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required />
+            </div>
+
+            <div class="field">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" name="phone" placeholder="Optional" />
+            </div>
+
+            <div class="field">
+              <label for="productType">Product type</label>
+              <select id="productType" name="product_type" required>
+                <option value="">Select one</option>
+                <option>Custom shelf</option>
+                <option>Table</option>
+                <option>Desk</option>
+                <option>Wall decor</option>
+                <option>Storage piece</option>
+                <option>Other custom product</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label for="dimensions">Preferred dimensions</label>
+              <input type="text" id="dimensions" name="dimensions" placeholder="Example: 48 in x 20 in x 30 in" />
+            </div>
+
+            <div class="field full">
+              <label for="style">Style or finish</label>
+              <input type="text" id="style" name="style" placeholder="Example: walnut finish, modern, rustic, minimal" />
+            </div>
+
+            <div class="field full">
+              <label for="details">Project details</label>
+              <textarea id="details" name="details" placeholder="Describe what you want us to build, how you want it to look, and any extra notes." required></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn">Submit Order Request</button>
+          <div class="success" id="successMessage">Your request is ready to send. Replace the email in the form action so submissions go to your inbox.</div>
+          <p class="note">
+            Important: change <strong>youremail@example.com</strong> in the form code to your real email address before publishing.
+          </p>
+        </form>
+      </div>
+
+      <aside class="panel">
+        <h2>What to include</h2>
+        <p>The more specific the request, the easier it is to give an accurate quote and build plan.</p>
+
+        <div class="info-list">
+          <div class="info-item">
+            <strong>Product idea</strong>
+            Tell us what kind of wooden product you want.
+          </div>
+          <div class="info-item">
+            <strong>Measurements</strong>
+            Add the size you need for your room or space.
+          </div>
+          <div class="info-item">
+            <strong>Style details</strong>
+            Mention finish, color, inspiration, or practical needs.
+          </div>
+          <div class="info-item">
+            <strong>Special requests</strong>
+            Include timelines, matching decor, or custom features.
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    Woodpecker Inc • Managed by Vishwak Gaddam, Aranjay R., and Varnav Nidikonda
+  </footer>
+
+  <script>
+    const form = document.getElementById('orderForm');
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function () {
+      successMessage.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
