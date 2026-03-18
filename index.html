@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Woodpecker Inc | Custom Wooden Products</title>
-  <meta name="description" content="Woodpecker Inc creates custom-built wooden products made to order for every customer." />
+  <title>Place an Order | Woodpecker Inc</title>
+  <meta name="description" content="Place a custom order with Woodpecker Inc for handmade wooden products." />
   <style>
     :root {
       --bg: #f7f5f2;
@@ -13,15 +13,13 @@
       --muted: #6b7280;
       --primary: #7c4a22;
       --primary-dark: #5f3617;
-      --accent: #d7b899;
       --border: #e5ded7;
       --shadow: 0 16px 40px rgba(31, 41, 55, 0.08);
       --radius: 22px;
-      --max: 1180px;
+      --max: 980px;
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -31,46 +29,26 @@
     }
 
     a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
 
     .container {
       width: min(100% - 2rem, var(--max));
       margin: 0 auto;
     }
 
-    .btn {
+    .topbar {
+      padding: 1.25rem 0;
+    }
+
+    .back-link {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      padding: 0.95rem 1.3rem;
-      border-radius: 999px;
+      gap: 0.5rem;
       font-weight: 700;
-      transition: 0.2s ease;
-      border: 1px solid transparent;
-      cursor: pointer;
+      color: var(--primary);
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-      box-shadow: var(--shadow);
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.72);
-      border-color: var(--border);
-      color: var(--text);
-      backdrop-filter: blur(8px);
-    }
-
-    .btn-secondary:hover {
-      background: #fff;
-      transform: translateY(-1px);
+    .hero {
+      padding: 1rem 0 2rem;
     }
 
     .tag {
@@ -84,228 +62,25 @@
       margin-bottom: 1rem;
     }
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(12px);
-      background: rgba(247, 245, 242, 0.82);
-      border-bottom: 1px solid rgba(229, 222, 215, 0.8);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 74px;
-      gap: 1rem;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      font-weight: 900;
-      letter-spacing: 0.02em;
-    }
-
-    .logo {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--primary), #a76a37);
-      color: white;
-      box-shadow: var(--shadow);
-      font-size: 1.2rem;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.2rem;
-      align-items: center;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    .nav-links a:hover { color: var(--primary); }
-
-    .menu-toggle {
-      display: none;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 0.6rem 0.85rem;
-      font-weight: 800;
-    }
-
-    .hero {
-      padding: 5.2rem 0 3.5rem;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.9fr;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.7rem, 5vw, 5rem);
-      line-height: 1.02;
-      margin: 0 0 1rem;
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.05;
       letter-spacing: -0.04em;
+      margin: 0 0 0.8rem;
     }
 
     .hero p {
-      font-size: 1.08rem;
       color: var(--muted);
+      font-size: 1.05rem;
       max-width: 60ch;
-      margin: 0 0 1.4rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.9rem;
-      margin-bottom: 1.6rem;
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.8rem;
-      max-width: 620px;
-    }
-
-    .stat {
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 1rem;
-      box-shadow: var(--shadow);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.35rem;
-      margin-bottom: 0.15rem;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .hero-card {
-      background: linear-gradient(180deg, #ffffff 0%, #f3ece5 100%);
-      border: 1px solid var(--border);
-      border-radius: 30px;
-      padding: 1.25rem;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .mockup {
-      min-height: 520px;
-      border-radius: 22px;
-      background:
-        radial-gradient(circle at top right, rgba(215, 184, 153, 0.58), transparent 35%),
-        linear-gradient(135deg, #8a5228 0%, #5c3419 100%);
-      padding: 1.2rem;
-      position: relative;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    .mockup-panel {
-      background: rgba(255,255,255,0.14);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 20px;
-      padding: 1rem;
-      backdrop-filter: blur(8px);
-      max-width: 280px;
-    }
-
-    .mockup-title {
-      position: absolute;
-      top: 1.2rem;
-      left: 1.2rem;
-      right: 1.2rem;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      align-items: center;
-    }
-
-    .section {
-      padding: 4.4rem 0;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 2rem;
-      align-items: end;
-      margin-bottom: 1.7rem;
-    }
-
-    .section h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
       margin: 0;
-      letter-spacing: -0.04em;
     }
 
-    .section .subtext {
-      color: var(--muted);
-      max-width: 60ch;
-      margin: 0.75rem 0 0;
-    }
-
-    .cards {
+    .layout {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.35rem;
-      box-shadow: var(--shadow);
-    }
-
-    .card .icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      background: rgba(124, 74, 34, 0.1);
-      color: var(--primary);
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .card h3 {
-      margin: 0 0 0.55rem;
-      font-size: 1.2rem;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.2fr 0.8fr;
       gap: 1.2rem;
-      align-items: stretch;
+      padding-bottom: 3rem;
     }
 
     .panel {
@@ -316,383 +91,240 @@
       box-shadow: var(--shadow);
     }
 
-    .checklist {
+    .panel h2 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      font-size: 1.5rem;
+    }
+
+    .panel p {
+      color: var(--muted);
+      margin-top: 0;
+    }
+
+    .form-grid {
       display: grid;
-      gap: 0.85rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .field {
+      display: grid;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 0.96rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 0.95rem 1rem;
+      font: inherit;
+      color: var(--text);
+      background: #fff;
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid rgba(124, 74, 34, 0.18);
+      border-color: var(--primary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.35rem;
+      border-radius: 999px;
+      border: 0;
+      font-weight: 800;
+      cursor: pointer;
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .note {
+      margin-top: 1rem;
+      font-size: 0.94rem;
+      color: var(--muted);
+    }
+
+    .info-list {
+      display: grid;
+      gap: 0.9rem;
       margin-top: 1.2rem;
     }
 
-    .check {
-      display: flex;
-      gap: 0.8rem;
-      align-items: flex-start;
+    .info-item {
       padding: 0.95rem 1rem;
+      border-radius: 18px;
       border: 1px solid var(--border);
       background: #fcfbfa;
+    }
+
+    .info-item strong {
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .success {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
       border-radius: 18px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      color: #166534;
+      font-weight: 600;
     }
-
-    .check-badge {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      background: rgba(124, 74, 34, 0.12);
-      color: var(--primary);
-      font-weight: 900;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
-    }
-
-    .showcase {
-      min-height: 380px;
-      border-radius: 24px;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(215,184,153,0.6), transparent 28%),
-        linear-gradient(160deg, #f2e4d4 0%, #d4b392 60%, #ac7340 100%);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .showcase::before,
-    .showcase::after {
-      content: "";
-      position: absolute;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.34);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.4);
-    }
-
-    .showcase::before {
-      width: 220px;
-      height: 120px;
-      top: 24px;
-      left: 24px;
-    }
-
-    .showcase::after {
-      width: 180px;
-      height: 180px;
-      bottom: 24px;
-      right: 24px;
-    }
-
-    .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .quote {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 1.35rem;
-      box-shadow: var(--shadow);
-    }
-
-    .quote p {
-      margin: 0 0 1rem;
-      color: var(--muted);
-    }
-
-    .quote strong { display: block; }
-    .quote span { color: var(--muted); font-size: 0.95rem; }
-
-    .cta {
-      background: linear-gradient(135deg, #6b3c1c 0%, #8e552f 100%);
-      color: white;
-      border-radius: 32px;
-      padding: 2rem;
-      box-shadow: var(--shadow);
-      display: flex;
-      justify-content: space-between;
-      gap: 1.5rem;
-      align-items: center;
-    }
-
-    .cta p { color: rgba(255,255,255,0.84); margin: 0.5rem 0 0; }
 
     footer {
-      padding: 2rem 0 3rem;
+      padding: 0 0 2.5rem;
       color: var(--muted);
+      text-align: center;
     }
 
-    .footer-grid {
-      display: flex;
-      justify-content: space-between;
-      gap: 1.5rem;
-      align-items: center;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      flex-wrap: wrap;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    @media (max-width: 980px) {
-      .hero-grid,
-      .cards,
-      .split,
-      .testimonial-grid {
+    @media (max-width: 900px) {
+      .layout,
+      .form-grid {
         grid-template-columns: 1fr;
       }
-
-      .section-head,
-      .cta {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .nav-links {
-        position: absolute;
-        top: 74px;
-        left: 1rem;
-        right: 1rem;
-        background: rgba(255,255,255,0.97);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        padding: 1rem;
-        flex-direction: column;
-        align-items: flex-start;
-        display: none;
-      }
-
-      .nav-links.open { display: flex; }
-      .menu-toggle { display: inline-flex; }
-      .hero-stats { grid-template-columns: 1fr; }
-      .hero { padding-top: 4rem; }
-      .mockup { min-height: 360px; }
-      .cta { padding: 1.5rem; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <a href="#top" class="brand" aria-label="Woodpecker Inc Home">
-        <div class="logo">W</div>
-        <span>Woodpecker Inc</span>
-      </a>
+  <div class="container topbar">
+    <a class="back-link" href="index.html">← Back to homepage</a>
+  </div>
 
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">Menu</button>
-
-      <nav class="nav-links" id="navLinks">
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#work">Why Us</a>
-        <a href="#testimonials">Reviews</a>
-        <a href="#contact" class="btn btn-primary">Contact</a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="top">
+  <main class="container">
     <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <div class="tag">Custom. Handcrafted. Made for You.</div>
-          <h1>Custom wooden products, built for your space.</h1>
-          <p>
-            At Woodpecker Inc, we create custom-built wooden products tailored to your style, needs, and space.
-            Every order is made to feel personal, practical, and uniquely yours.
+      <div class="tag">Custom Orders</div>
+      <h1>Place your custom wood order</h1>
+      <p>
+        Tell us what you want built, share the size or style you have in mind, and send your request to Woodpecker Inc.
+        This page is set up as a clean starter order form for GitHub Pages.
+      </p>
+    </section>
+
+    <section class="layout">
+      <div class="panel">
+        <h2>Order form</h2>
+        <p>Fill out the details below so we can understand your custom request.</p>
+
+        <form id="orderForm" action="https://formsubmit.co/youremail@example.com" method="POST">
+          <input type="hidden" name="_subject" value="New Woodpecker Inc Order Request" />
+          <input type="hidden" name="_captcha" value="false" />
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">Full name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required />
+            </div>
+
+            <div class="field">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" name="phone" placeholder="Optional" />
+            </div>
+
+            <div class="field">
+              <label for="productType">Product type</label>
+              <select id="productType" name="product_type" required>
+                <option value="">Select one</option>
+                <option>Custom shelf</option>
+                <option>Table</option>
+                <option>Desk</option>
+                <option>Wall decor</option>
+                <option>Storage piece</option>
+                <option>Other custom product</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label for="dimensions">Preferred dimensions</label>
+              <input type="text" id="dimensions" name="dimensions" placeholder="Example: 48 in x 20 in x 30 in" />
+            </div>
+
+            <div class="field full">
+              <label for="style">Style or finish</label>
+              <input type="text" id="style" name="style" placeholder="Example: walnut finish, modern, rustic, minimal" />
+            </div>
+
+            <div class="field full">
+              <label for="details">Project details</label>
+              <textarea id="details" name="details" placeholder="Describe what you want us to build, how you want it to look, and any extra notes." required></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn">Submit Order Request</button>
+          <div class="success" id="successMessage">Your request is ready to send. Replace the email in the form action so submissions go to your inbox.</div>
+          <p class="note">
+            Important: change <strong>youremail@example.com</strong> in the form code to your real email address before publishing.
           </p>
-          <div class="hero-actions">
-            <a href="#contact" class="btn btn-primary">Order Now</a>
-          </div>
-          <div class="hero-stats">
-            <div class="stat">
-              <strong>Custom Built</strong>
-              <span>Made to order</span>
-            </div>
-            <div class="stat">
-              <strong>Tailored Designs</strong>
-              <span>Built around your needs</span>
-            </div>
-            <div class="stat">
-              <strong>98%</strong>
-              <span>Client satisfaction</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-card">
-          <div class="mockup" role="img" aria-label="Decorative brand panel for Woodpecker Inc">
-            <div class="mockup-title">
-              <strong>Woodpecker Inc</strong>
-              <span>Custom Built Woodwork</span>
-            </div>
-            <div class="mockup-panel">
-              <strong style="font-size: 1.15rem; display: block; margin-bottom: 0.4rem;">Made-to-order wooden products</strong>
-              <span style="color: rgba(255,255,255,0.82);">
-                Showcase a featured custom piece, handcrafted design, or customer favorite here.
-              </span>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
-    </section>
 
-    <section class="section" id="about">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <div class="tag">About us</div>
-            <h2>Custom woodwork designed around your needs</h2>
-            <p class="subtext">
-              Woodpecker Inc creates custom wooden products for customers who want something personal,
-              functional, and built specifically for them.
-            </p>
+      <aside class="panel">
+        <h2>What to include</h2>
+        <p>The more specific the request, the easier it is to give an accurate quote and build plan.</p>
+
+        <div class="info-list">
+          <div class="info-item">
+            <strong>Product idea</strong>
+            Tell us what kind of wooden product you want.
+          </div>
+          <div class="info-item">
+            <strong>Measurements</strong>
+            Add the size you need for your room or space.
+          </div>
+          <div class="info-item">
+            <strong>Style details</strong>
+            Mention finish, color, inspiration, or practical needs.
+          </div>
+          <div class="info-item">
+            <strong>Special requests</strong>
+            Include timelines, matching decor, or custom features.
           </div>
         </div>
-
-        <div class="cards">
-          <article class="card">
-            <div class="icon">🪵</div>
-            <h3>Custom Craftsmanship</h3>
-            <p>Each wooden product is custom built with care, detail, and attention to your vision.</p>
-          </article>
-          <article class="card">
-            <div class="icon">🤝</div>
-            <h3>Made to Order</h3>
-            <p>Customers order directly from us and receive wooden products built to match their needs.</p>
-          </article>
-          <article class="card">
-            <div class="icon">📍</div>
-            <h3>Designed for You</h3>
-            <p>From style to size, every build can be shaped around the customer’s preferences.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="services">
-      <div class="container split">
-        <div class="panel">
-          <div class="tag">Services</div>
-          <h2 style="margin-top: 0;">What Woodpecker Inc offers</h2>
-          <p class="subtext">
-            We create custom-built wooden products designed for each customer, whether they need something decorative,
-            functional, or completely one of a kind.
-          </p>
-
-          <div class="checklist">
-            <div class="check">
-              <div class="check-badge">✓</div>
-              <div>
-                <strong>Custom Home Pieces</strong>
-                <div style="color: var(--muted);">Beautiful wooden products made to fit your home, style, and personal taste.</div>
-              </div>
-            </div>
-            <div class="check">
-              <div class="check-badge">✓</div>
-              <div>
-                <strong>Functional Wooden Builds</strong>
-                <div style="color: var(--muted);">Built for everyday use with a focus on practicality, durability, and design.</div>
-              </div>
-            </div>
-            <div class="check">
-              <div class="check-badge">✓</div>
-              <div>
-                <strong>One-of-a-Kind Orders</strong>
-                <div style="color: var(--muted);">Custom requests are shaped around what the customer wants, not a one-size-fits-all template.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel" id="work">
-          <div class="showcase" aria-hidden="true"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="testimonials">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <div class="tag">Client feedback</div>
-            <h2>Why customers choose Woodpecker Inc</h2>
-            <p class="subtext">
-              Our custom approach and strong client satisfaction help set Woodpecker Inc apart.
-            </p>
-          </div>
-        </div>
-
-        <div class="testimonial-grid">
-          <article class="quote">
-            <p>“Woodpecker Inc delivered exactly what we needed, on time and with great communication from start to finish.”</p>
-            <strong>Alex M.</strong>
-            <span>Homeowner</span>
-          </article>
-          <article class="quote">
-            <p>“The team was professional, dependable, and easy to work with. We would absolutely hire them again.”</p>
-            <strong>Jordan T.</strong>
-            <span>Business Client</span>
-          </article>
-          <article class="quote">
-            <p>“The final result looked fantastic. The quality and attention to detail really stood out.”</p>
-            <strong>Priya S.</strong>
-            <span>Repeat Customer</span>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <div class="container">
-        <div class="cta">
-          <div>
-            <div class="tag" style="background: rgba(255,255,255,0.14); color: white; margin-bottom: 0.8rem;">Get started</div>
-            <h2 style="margin: 0; color: white;">Ready to order a custom wooden product?</h2>
-            <p>Reach out to Woodpecker Inc to discuss your idea, request a quote, or start a custom build.</p>
-          </div>
-          <div style="display: grid; gap: 0.8rem; min-width: min(100%, 280px);">
-            <a class="btn btn-secondary" href="mailto:hello@woodpeckerinc.com">hello@woodpeckerinc.com</a>
-            <a class="btn btn-secondary" href="tel:+10000000000">(000) 000-0000</a>
-          </div>
-        </div>
-      </div>
+      </aside>
     </section>
   </main>
 
   <footer>
-    <div class="container footer-grid">
-      <div>
-        <strong>Woodpecker Inc</strong><br />
-        <span>Managed by: Vishwak Gaddam, Aranjay R., and Varnav Nidikonda</span><br />
-        <span>© <span id="year"></span> All rights reserved.</span>
-      </div>
-      <div class="footer-links">
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </div>
+    Woodpecker Inc • Managed by Vishwak Gaddam, Aranjay R., and Varnav Nidikonda
   </footer>
 
   <script>
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
-    const year = document.getElementById('year');
+    const form = document.getElementById('orderForm');
+    const successMessage = document.getElementById('successMessage');
 
-    year.textContent = new Date().getFullYear();
-
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-    });
-
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    form.addEventListener('submit', function () {
+      successMessage.style.display = 'block';
     });
   </script>
 </body>
