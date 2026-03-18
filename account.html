@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account | Woodpecker Inc</title>
+  <style>
+    :root {
+      --bg: #f7f5f2;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #7c4a22;
+      --primary-dark: #5f3617;
+      --border: #e5ded7;
+      --shadow: 0 16px 40px rgba(31, 41, 55, 0.08);
+      --radius: 22px;
+      --max: 560px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #faf8f5 0%, #f7f5f2 100%);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: var(--max);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 16px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 2.6rem);
+      line-height: 1.05;
+    }
+
+    .subtext {
+      margin: 0 0 24px;
+      color: var(--muted);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font: inherit;
+      background: white;
+      color: var(--text);
+    }
+
+    input:focus {
+      outline: 2px solid rgba(124, 74, 34, 0.18);
+      border-color: var(--primary);
+    }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-weight: 800;
+      cursor: pointer;
+      background: var(--primary);
+      color: white;
+      margin-top: 4px;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .hint {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .status {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #fcfbfa;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      min-height: 48px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <a href="index.html" class="back-link">← Back to homepage</a>
+    <h1>Account</h1>
+    <p class="subtext">Create an account or log in with a username and password.</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="showSignup" type="button">Sign up</button>
+      <button class="tab-btn" id="showLogin" type="button">Log in</button>
+    </div>
+
+    <div class="panel active" id="signupPanel">
+      <form id="signupForm">
+        <div class="field">
+          <label for="signupUsername">Username</label>
+          <input type="text" id="signupUsername" placeholder="Choose a username" required />
+        </div>
+        <div class="field">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" placeholder="Create a password" required />
+        </div>
+        <button class="btn" type="submit">Create account</button>
+      </form>
+    </div>
+
+    <div class="panel" id="loginPanel">
+      <form id="loginForm">
+        <div class="field">
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" placeholder="Enter your username" required />
+        </div>
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required />
+        </div>
+        <button class="btn" type="submit">Log in</button>
+      </form>
+    </div>
+
+    <div class="hint">
+      Your username is converted behind the scenes into an internal Firebase email.
+    </div>
+
+    <div class="status" id="status">Ready.</div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyChRzNJs4XyLxliSVSFNb8rsmcXFDw5XIo",
+      authDomain: "woodpecker-e4c85.firebaseapp.com",
+      projectId: "woodpecker-e4c85",
+      storageBucket: "woodpecker-e4c85.firebasestorage.app",
+      messagingSenderId: "1039525973528",
+      appId: "1:1039525973528:web:a836bb3172767aa104fd6d",
+      measurementId: "G-SD1VV3H7E4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const statusEl = document.getElementById("status");
+
+    const showSignup = document.getElementById("showSignup");
+    const showLogin = document.getElementById("showLogin");
+    const signupPanel = document.getElementById("signupPanel");
+    const loginPanel = document.getElementById("loginPanel");
+
+    function setMode(mode) {
+      const signup = mode === "signup";
+      showSignup.classList.toggle("active", signup);
+      showLogin.classList.toggle("active", !signup);
+      signupPanel.classList.toggle("active", signup);
+      loginPanel.classList.toggle("active", !signup);
+      statusEl.textContent = "Ready.";
+    }
+
+    showSignup.addEventListener("click", () => setMode("signup"));
+    showLogin.addEventListener("click", () => setMode("login"));
+
+    function usernameToEmail(username) {
+      const clean = username.trim().toLowerCase();
+
+      if (!/^[a-z0-9._-]+$/.test(clean)) {
+        throw new Error("Username can only use letters, numbers, dots, dashes, and underscores.");
+      }
+
+      return `${clean}@woodpecker.local`;
+    }
+
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("signupUsername").value;
+      const password = document.getElementById("signupPassword").value;
+
+      try {
+        const email = usernameToEmail(username);
+        await createUserWithEmailAndPassword(auth, email, password);
+        statusEl.textContent = "Account created. Redirecting...";
+        window.location.href = "order.html";
+      } catch (err) {
+        statusEl.textContent = err.message;
+      }
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("loginUsername").value;
+      const password = document.getElementById("loginPassword").value;
+
+      try {
+        const email = usernameToEmail(username);
+        await signInWithEmailAndPassword(auth, email, password);
+        statusEl.textContent = "Logged in. Redirecting...";
+        window.location.href = "order.html";
+      } catch (err) {
+        statusEl.textContent = err.message;
+      }
+    });
+  </script>
+</body>
+</html>
