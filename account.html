@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Account | Woodpecker Inc</title>
-  <meta name="description" content="Sign in to your Woodpecker Inc account and view your orders." />
+  <meta
+    name="description"
+    content="Sign in to your Woodpecker Inc account and view your orders."
+  />
   <style>
     :root {
       --bg: #f7f5f2;
@@ -22,9 +25,18 @@
       --error-border: rgba(239, 68, 68, 0.2);
       --error-text: #991b1b;
       --max: 1100px;
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 16px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       margin: 0;
@@ -34,7 +46,10 @@
       line-height: 1.6;
     }
 
-    a { color: inherit; text-decoration: none; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
     .container {
       width: min(100% - 2rem, var(--max));
@@ -74,14 +89,24 @@
     }
 
     h1 {
-      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-size: clamp(2.35rem, 5vw, 4rem);
       line-height: 1.05;
       letter-spacing: -0.04em;
-      margin: 0 0 0.8rem;
+      margin: 0 0 0.85rem;
+    }
+
+    h2 {
+      margin: 0 0 0.65rem;
+      font-size: 1.45rem;
+    }
+
+    .hero p,
+    .panel p,
+    .subtle {
+      color: var(--muted);
     }
 
     .hero p {
-      color: var(--muted);
       font-size: 1.05rem;
       max-width: 60ch;
       margin: 0;
@@ -98,83 +123,9 @@
     .panel {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 28px;
+      border-radius: var(--radius-lg);
       padding: 1.5rem;
       box-shadow: var(--shadow);
-    }
-
-    .panel h2 {
-      margin-top: 0;
-      margin-bottom: 0.75rem;
-      font-size: 1.5rem;
-    }
-
-    .panel p {
-      color: var(--muted);
-      margin-top: 0;
-    }
-
-    .field {
-      display: grid;
-      gap: 0.45rem;
-      margin-bottom: 1rem;
-    }
-
-    label {
-      font-weight: 700;
-      font-size: 0.96rem;
-    }
-
-    input {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 0.95rem 1rem;
-      font: inherit;
-      color: var(--text);
-      background: #fff;
-    }
-
-    input:focus {
-      outline: 2px solid rgba(124, 74, 34, 0.18);
-      border-color: var(--primary);
-    }
-
-    .btn,
-    .ghost-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.95rem 1.35rem;
-      border-radius: 999px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: 0.2s ease;
-      width: 100%;
-    }
-
-    .btn {
-      border: 0;
-      background: var(--primary);
-      color: white;
-      box-shadow: var(--shadow);
-    }
-
-    .btn:hover {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-    }
-
-    .ghost-btn {
-      border: 1px solid var(--border);
-      background: #fff;
-      color: var(--text);
-      box-shadow: none;
-    }
-
-    .ghost-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
     }
 
     .tabs {
@@ -192,12 +143,95 @@
       border-radius: 999px;
       cursor: pointer;
       font-weight: 800;
+      transition: 0.2s ease;
+    }
+
+    .tab:hover {
+      border-color: var(--primary);
+      color: var(--primary);
     }
 
     .tab.active {
       background: var(--primary);
       color: #fff;
       border-color: var(--primary);
+    }
+
+    .field {
+      display: grid;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 0.96rem;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.95rem 1rem;
+      font: inherit;
+      color: var(--text);
+      background: #fff;
+    }
+
+    input:focus {
+      outline: 2px solid rgba(124, 74, 34, 0.18);
+      border-color: var(--primary);
+    }
+
+    .small-note {
+      margin-top: -0.25rem;
+      margin-bottom: 1rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .btn,
+    .ghost-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 0.95rem 1.35rem;
+      border-radius: 999px;
+      font-weight: 800;
+      font: inherit;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn {
+      border: 0;
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled,
+    .ghost-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .ghost-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+    }
+
+    .ghost-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
     }
 
     .message {
@@ -220,7 +254,9 @@
       color: var(--error-text);
     }
 
-    .hidden { display: none !important; }
+    .hidden {
+      display: none !important;
+    }
 
     .profile-card {
       display: grid;
@@ -248,7 +284,7 @@
 
     .stat {
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: var(--radius-md);
       padding: 1rem;
       background: #fcfbfa;
     }
@@ -311,6 +347,7 @@
       font-weight: 800;
       text-transform: capitalize;
       font-size: 0.88rem;
+      white-space: nowrap;
     }
 
     .order-meta {
@@ -322,6 +359,7 @@
 
     .order-detail {
       white-space: pre-wrap;
+      word-break: break-word;
     }
 
     .empty-state {
@@ -334,6 +372,16 @@
 
     @media (max-width: 950px) {
       .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .panel {
+        padding: 1.15rem;
+      }
+
+      .profile-stat-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -367,19 +415,30 @@
 
           <form id="signinForm">
             <h2>Welcome back</h2>
-            <p>Sign in to place orders and see your previous requests.</p>
+            <p>Sign in with your username and password.</p>
 
             <div class="field">
-              <label for="signinEmail">Username</label>
-              <input type="text" id="signinEmail" placeholder="Enter your username" required />
+              <label for="signinUsername">Username</label>
+              <input
+                type="text"
+                id="signinUsername"
+                placeholder="Enter your username"
+                autocomplete="username"
+                required
+              />
             </div>
 
             <div class="field">
               <label for="signinPassword">Password</label>
-              <input type="password" id="signinPassword" required />
+              <input
+                type="password"
+                id="signinPassword"
+                autocomplete="current-password"
+                required
+              />
             </div>
 
-            <button class="btn" type="submit">Sign in</button>
+            <button class="btn" id="signinButton" type="submit">Sign in</button>
           </form>
 
           <form id="signupForm" class="hidden">
@@ -388,20 +447,42 @@
 
             <div class="field">
               <label for="signupName">Full name</label>
-              <input type="text" id="signupName" required />
+              <input
+                type="text"
+                id="signupName"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                required
+              />
             </div>
 
             <div class="field">
-              <label for="signupEmail">Username</label>
-              <input type="text" id="signupEmail" placeholder="Choose a username" required />
+              <label for="signupUsername">Username</label>
+              <input
+                type="text"
+                id="signupUsername"
+                placeholder="Choose a username"
+                autocomplete="username"
+                required
+              />
+            </div>
+
+            <div class="small-note">
+              Users only type a username. The site secretly saves it as <code>username@woodpecker.local</code>.
             </div>
 
             <div class="field">
               <label for="signupPassword">Password</label>
-              <input type="password" id="signupPassword" minlength="6" required />
+              <input
+                type="password"
+                id="signupPassword"
+                minlength="6"
+                autocomplete="new-password"
+                required
+              />
             </div>
 
-            <button class="btn" type="submit">Create account</button>
+            <button class="btn" id="signupButton" type="submit">Create account</button>
           </form>
         </div>
 
@@ -409,9 +490,10 @@
           <h2>Profile</h2>
           <div class="profile-card">
             <div class="profile-chip" id="profileChip">Signed in</div>
+
             <div>
               <strong id="profileName">—</strong><br />
-              <span id="profileEmail" style="color: var(--muted);"></span>
+              <span id="profileUsername" style="color: var(--muted);"></span>
             </div>
 
             <div class="profile-stat-grid">
@@ -455,77 +537,157 @@
       signOut,
       updateProfile
     } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-    import { collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+    import {
+      collection,
+      getDocs,
+      orderBy,
+      query
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
     import { auth, db } from "./firebase-config.js";
 
     const params = new URLSearchParams(window.location.search);
-    const next = params.get('next');
+    const next = params.get("next");
 
-    const signinTab = document.getElementById('signinTab');
-    const signupTab = document.getElementById('signupTab');
-    const signinForm = document.getElementById('signinForm');
-    const signupForm = document.getElementById('signupForm');
-    const authPanel = document.getElementById('authPanel');
-    const profilePanel = document.getElementById('profilePanel');
-    const authSuccess = document.getElementById('authSuccess');
-    const authError = document.getElementById('authError');
-    const ordersError = document.getElementById('ordersError');
-    const ordersList = document.getElementById('ordersList');
-    const profileChip = document.getElementById('profileChip');
-    const profileName = document.getElementById('profileName');
-    const profileEmail = document.getElementById('profileEmail');
-    const orderCount = document.getElementById('orderCount');
-    const logoutButton = document.getElementById('logoutButton');
+    const signinTab = document.getElementById("signinTab");
+    const signupTab = document.getElementById("signupTab");
+
+    const signinForm = document.getElementById("signinForm");
+    const signupForm = document.getElementById("signupForm");
+
+    const signinButton = document.getElementById("signinButton");
+    const signupButton = document.getElementById("signupButton");
+
+    const authPanel = document.getElementById("authPanel");
+    const profilePanel = document.getElementById("profilePanel");
+
+    const authSuccess = document.getElementById("authSuccess");
+    const authError = document.getElementById("authError");
+    const ordersError = document.getElementById("ordersError");
+
+    const ordersList = document.getElementById("ordersList");
+    const profileChip = document.getElementById("profileChip");
+    const profileName = document.getElementById("profileName");
+    const profileUsername = document.getElementById("profileUsername");
+    const orderCount = document.getElementById("orderCount");
+    const logoutButton = document.getElementById("logoutButton");
 
     function showAuthTab(mode) {
-      const signInMode = mode === 'signin';
-      signinTab.classList.toggle('active', signInMode);
-      signupTab.classList.toggle('active', !signInMode);
-      signinForm.classList.toggle('hidden', !signInMode);
-      signupForm.classList.toggle('hidden', signInMode);
+      const signInMode = mode === "signin";
+      signinTab.classList.toggle("active", signInMode);
+      signupTab.classList.toggle("active", !signInMode);
+      signinForm.classList.toggle("hidden", !signInMode);
+      signupForm.classList.toggle("hidden", signInMode);
       hideMessages();
     }
 
     function hideMessages() {
-      authSuccess.style.display = 'none';
-      authError.style.display = 'none';
-      ordersError.style.display = 'none';
+      authSuccess.style.display = "none";
+      authError.style.display = "none";
+      ordersError.style.display = "none";
     }
 
     function showAuthError(message) {
       authError.textContent = message;
-      authError.style.display = 'block';
-      authSuccess.style.display = 'none';
+      authError.style.display = "block";
+      authSuccess.style.display = "none";
     }
 
     function showAuthSuccess(message) {
       authSuccess.textContent = message;
-      authSuccess.style.display = 'block';
-      authError.style.display = 'none';
+      authSuccess.style.display = "block";
+      authError.style.display = "none";
+    }
+
+    function setButtonLoading(button, isLoading, textWhenIdle, loadingText) {
+      button.disabled = isLoading;
+      button.textContent = isLoading ? loadingText : textWhenIdle;
+    }
+
+    function sanitizeUsername(value) {
+      return value.trim().toLowerCase().replace(/@.*$/, "");
+    }
+
+    function isValidUsername(username) {
+      return /^[a-z0-9._-]{3,24}$/.test(username);
     }
 
     function buildWoodpeckerEmail(value) {
-      const username = value.trim().toLowerCase().replace(/@.*$/, '');
-      return username ? `${username}@woodpecker.local` : '';
+      const username = sanitizeUsername(value);
+      return username ? `${username}@woodpecker.local` : "";
+    }
+
+    function emailToUsername(email) {
+      return String(email || "").replace(/@woodpecker\.local$/i, "");
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function friendlyAuthMessage(error) {
+      switch (error?.code) {
+        case "auth/email-already-in-use":
+          return "That username is already taken.";
+        case "auth/invalid-email":
+          return "That username is not valid.";
+        case "auth/weak-password":
+          return "Password must be at least 6 characters.";
+        case "auth/invalid-credential":
+        case "auth/user-not-found":
+        case "auth/wrong-password":
+          return "Wrong username or password.";
+        case "auth/too-many-requests":
+          return "Too many attempts. Try again in a little while.";
+        case "auth/network-request-failed":
+          return "Network error. Check your connection and try again.";
+        default:
+          return error?.message || "Something went wrong.";
+      }
+    }
+
+    function validateUsernameOrThrow(rawValue) {
+      const username = sanitizeUsername(rawValue);
+
+      if (!username) {
+        throw new Error("Please enter a username.");
+      }
+
+      if (!isValidUsername(username)) {
+        throw new Error(
+          "Username must be 3 to 24 characters and only use letters, numbers, periods, underscores, or dashes."
+        );
+      }
+
+      return username;
     }
 
     async function loadOrders(user) {
-      ordersError.style.display = 'none';
-      ordersList.innerHTML = '<div class="empty-state">Loading your orders...</div>';
+      ordersError.style.display = "none";
+      ordersList.innerHTML = `<div class="empty-state">Loading your orders...</div>`;
 
       try {
         const q = query(
-          collection(db, 'users', user.uid, 'orders'),
-          orderBy('createdAt', 'desc')
+          collection(db, "users", user.uid, "orders"),
+          orderBy("createdAt", "desc")
         );
 
         const snapshot = await getDocs(q);
 
         if (snapshot.empty) {
-          orderCount.textContent = '0';
+          orderCount.textContent = "0";
           ordersList.innerHTML = `
             <div class="empty-state">
-              You have no orders yet. <a href="order.html" style="color: var(--primary); text-decoration: underline;">Place your first order</a>.
+              You have no orders yet.
+              <a href="order.html" style="color: var(--primary); text-decoration: underline;">
+                Place your first order
+              </a>.
             </div>
           `;
           return;
@@ -533,112 +695,174 @@
 
         orderCount.textContent = String(snapshot.size);
 
-        const orderCards = snapshot.docs.map((docSnapshot) => {
+        const cards = snapshot.docs.map((docSnapshot) => {
           const order = docSnapshot.data();
+
           const createdAt = order.createdAt?.toDate
             ? order.createdAt.toDate().toLocaleString()
-            : 'Just now';
+            : "Just now";
+
+          const customerName = escapeHtml(order.customerName || user.displayName || "Unnamed customer");
+          const customerEmail = escapeHtml(order.customerEmail || user.email || "");
+          const dimensions = escapeHtml(order.dimensions || "Not provided");
+          const details = escapeHtml(order.details || "");
+          const status = escapeHtml(order.status || "submitted");
 
           return `
             <article class="order-card">
               <div class="order-top">
                 <div>
-                  <strong>${order.customerName || 'Unnamed customer'}</strong>
-                  <div class="order-id">Order ID: ${docSnapshot.id}</div>
+                  <strong>${customerName}</strong>
+                  <div class="order-id">Order ID: ${escapeHtml(docSnapshot.id)}</div>
                 </div>
-                <div class="status-pill">${order.status || 'submitted'}</div>
+                <div class="status-pill">${status}</div>
               </div>
+
               <div class="order-meta">
-                <div><strong>Submitted:</strong> ${createdAt}</div>
-                <div><strong>Email:</strong> ${order.customerEmail || user.email || ''}</div>
-                <div><strong>Dimensions:</strong> ${order.dimensions || 'Not provided'}</div>
+                <div><strong>Submitted:</strong> ${escapeHtml(createdAt)}</div>
+                <div><strong>Email:</strong> ${customerEmail}</div>
+                <div><strong>Dimensions:</strong> ${dimensions}</div>
               </div>
+
               <div>
                 <strong>Request details</strong>
-                <div class="order-detail">${(order.details || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+                <div class="order-detail">${details}</div>
               </div>
             </article>
           `;
-        }).join('');
+        }).join("");
 
-        ordersList.innerHTML = orderCards;
+        ordersList.innerHTML = cards;
       } catch (error) {
         console.error(error);
-        ordersList.innerHTML = '<div class="empty-state">We could not load your orders right now.</div>';
-        ordersError.textContent = error?.message || 'Unable to load orders.';
-        ordersError.style.display = 'block';
+        orderCount.textContent = "0";
+        ordersList.innerHTML = `<div class="empty-state">We could not load your orders right now.</div>`;
+        ordersError.textContent = error?.message || "Unable to load orders.";
+        ordersError.style.display = "block";
       }
     }
 
-    signinTab.addEventListener('click', () => showAuthTab('signin'));
-    signupTab.addEventListener('click', () => showAuthTab('signup'));
+    signinTab.addEventListener("click", () => showAuthTab("signin"));
+    signupTab.addEventListener("click", () => showAuthTab("signup"));
 
-    signinForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    signinForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
       hideMessages();
 
-      const email = buildWoodpeckerEmail(document.getElementById('signinEmail').value);
-      const password = document.getElementById('signinPassword').value;
-
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        showAuthSuccess('Signed in successfully.');
-      } catch (error) {
-        console.error(error);
-        showAuthError(error?.message || 'Unable to sign in.');
-      }
-    });
+        setButtonLoading(signinButton, true, "Sign in", "Signing in...");
 
-    signupForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      hideMessages();
+        const username = validateUsernameOrThrow(
+          document.getElementById("signinUsername").value
+        );
+        const password = document.getElementById("signinPassword").value;
 
-      const name = document.getElementById('signupName').value.trim();
-      const email = buildWoodpeckerEmail(document.getElementById('signupEmail').value);
-      const password = document.getElementById('signupPassword').value;
-
-      try {
-        const credential = await createUserWithEmailAndPassword(auth, email, password);
-        if (name) {
-          await updateProfile(credential.user, { displayName: name });
+        if (!password) {
+          throw new Error("Please enter your password.");
         }
-        showAuthSuccess('Account created successfully.');
+
+        const email = buildWoodpeckerEmail(username);
+        await signInWithEmailAndPassword(auth, email, password);
+
+        localStorage.setItem("woodpecker_last_username", username);
+        showAuthSuccess("Signed in successfully.");
       } catch (error) {
         console.error(error);
-        showAuthError(error?.message || 'Unable to create account.');
+        showAuthError(friendlyAuthMessage(error));
+      } finally {
+        setButtonLoading(signinButton, false, "Sign in", "Signing in...");
       }
     });
 
-    logoutButton.addEventListener('click', async () => {
-      await signOut(auth);
-      showAuthSuccess('Logged out successfully.');
-      showAuthTab('signin');
+    signupForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      hideMessages();
+
+      try {
+        setButtonLoading(signupButton, true, "Create account", "Creating account...");
+
+        const fullName = document.getElementById("signupName").value.trim();
+        const username = validateUsernameOrThrow(
+          document.getElementById("signupUsername").value
+        );
+        const password = document.getElementById("signupPassword").value;
+
+        if (!fullName) {
+          throw new Error("Please enter your full name.");
+        }
+
+        if (password.length < 6) {
+          throw new Error("Password must be at least 6 characters.");
+        }
+
+        const email = buildWoodpeckerEmail(username);
+        const credential = await createUserWithEmailAndPassword(auth, email, password);
+
+        await updateProfile(credential.user, {
+          displayName: fullName
+        });
+
+        localStorage.setItem("woodpecker_last_username", username);
+        showAuthSuccess("Account created successfully.");
+      } catch (error) {
+        console.error(error);
+        showAuthError(friendlyAuthMessage(error));
+      } finally {
+        setButtonLoading(signupButton, false, "Create account", "Creating account...");
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      hideMessages();
+
+      try {
+        await signOut(auth);
+        showAuthSuccess("Logged out successfully.");
+        showAuthTab("signin");
+      } catch (error) {
+        console.error(error);
+        showAuthError("Could not log out right now.");
+      }
     });
 
     onAuthStateChanged(auth, async (user) => {
       hideMessages();
 
       if (!user) {
-        authPanel.classList.remove('hidden');
-        profilePanel.classList.add('hidden');
-        ordersList.innerHTML = '<div class="empty-state">Sign in to view your orders.</div>';
-        orderCount.textContent = '0';
-        if (next === 'order') {
-          showAuthError('Sign in first, then place your order.');
+        authPanel.classList.remove("hidden");
+        profilePanel.classList.add("hidden");
+        ordersList.innerHTML = `<div class="empty-state">Sign in to view your orders.</div>`;
+        orderCount.textContent = "0";
+
+        const savedUsername = localStorage.getItem("woodpecker_last_username");
+        if (savedUsername) {
+          const signinUsernameInput = document.getElementById("signinUsername");
+          if (signinUsernameInput && !signinUsernameInput.value) {
+            signinUsernameInput.value = savedUsername;
+          }
         }
+
+        if (next === "order") {
+          showAuthError("Sign in first, then place your order.");
+        }
+
         return;
       }
 
-      authPanel.classList.add('hidden');
-      profilePanel.classList.remove('hidden');
-      profileChip.textContent = user.displayName ? `Signed in as ${user.displayName}` : 'Signed in';
-      profileName.textContent = user.displayName || 'Woodpecker customer';
-      profileEmail.textContent = user.email || '';
+      authPanel.classList.add("hidden");
+      profilePanel.classList.remove("hidden");
+
+      const username = emailToUsername(user.email || "");
+      profileChip.textContent = user.displayName
+        ? `Signed in as ${user.displayName}`
+        : "Signed in";
+      profileName.textContent = user.displayName || "Woodpecker customer";
+      profileUsername.textContent = username ? `Username: ${username}` : "";
 
       await loadOrders(user);
 
-      if (next === 'order') {
-        window.location.href = './order.html';
+      if (next === "order") {
+        window.location.href = "./order.html";
       }
     });
   </script>
