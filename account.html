@@ -63,6 +63,7 @@
       display: flex;
       gap: 10px;
       margin-bottom: 20px;
+      flex-wrap: wrap;
     }
 
     .tab-btn {
@@ -144,7 +145,7 @@
 </head>
 <body>
   <div class="card">
-    <a href="index.html" class="back-link">← Back to homepage</a>
+    <a href="./index.html" class="back-link">← Back to homepage</a>
     <h1>Account</h1>
     <p class="subtext">Create an account or log in.</p>
 
@@ -206,7 +207,6 @@
     const auth = getAuth(app);
 
     const statusEl = document.getElementById("status");
-
     const showSignup = document.getElementById("showSignup");
     const showLogin = document.getElementById("showLogin");
     const signupPanel = document.getElementById("signupPanel");
@@ -234,13 +234,29 @@
       return `${clean}@woodpecker.local`;
     }
 
+    function saveUser(username) {
+      localStorage.setItem(
+        "woodpecker_account_user",
+        JSON.stringify({
+          username: username.trim()
+        })
+      );
+    }
+
     function friendlyMessage(error) {
+      const message = error?.message || "";
       const code = error?.code || "";
 
+      if (message.includes("Username can only use")) return message;
       if (code.includes("email-already-in-use")) return "That username is already taken.";
       if (code.includes("invalid-email")) return "That username is not valid.";
       if (code.includes("weak-password")) return "Password should be at least 6 characters.";
-      if (code.includes("invalid-credential") || code.includes("wrong-password") || code.includes("user-not-found")) {
+      if (
+        code.includes("invalid-credential") ||
+        code.includes("wrong-password") ||
+        code.includes("user-not-found") ||
+        code.includes("invalid-login-credentials")
+      ) {
         return "Incorrect username or password.";
       }
       if (code.includes("too-many-requests")) return "Too many attempts. Please try again later.";
@@ -257,8 +273,9 @@
       try {
         const email = usernameToEmail(username);
         await createUserWithEmailAndPassword(auth, email, password);
+        saveUser(username);
         statusEl.textContent = "Account created. Redirecting...";
-        window.location.href = "index.html";
+        window.location.href = "./index.html";
       } catch (err) {
         statusEl.textContent = friendlyMessage(err);
       }
@@ -273,8 +290,9 @@
       try {
         const email = usernameToEmail(username);
         await signInWithEmailAndPassword(auth, email, password);
+        saveUser(username);
         statusEl.textContent = "Logged in. Redirecting...";
-        window.location.href = "index.html";
+        window.location.href = "./index.html";
       } catch (err) {
         statusEl.textContent = friendlyMessage(err);
       }
