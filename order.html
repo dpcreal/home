@@ -38,6 +38,11 @@
 
     .topbar {
       padding: 1.25rem 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     .back-link {
@@ -135,8 +140,13 @@
     }
 
     textarea {
-      min-height: 200px;
+      min-height: 220px;
       resize: vertical;
+    }
+
+    input[readonly] {
+      background: #f8f8f8;
+      color: var(--muted);
     }
 
     input:focus, textarea:focus {
@@ -182,15 +192,39 @@
       margin-bottom: 0.2rem;
     }
 
-    .success {
+    .notice,
+    .success,
+    .error {
       display: none;
       margin-top: 1rem;
       padding: 1rem;
       border-radius: 18px;
+      font-weight: 600;
+    }
+
+    .notice {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      color: #1d4ed8;
+    }
+
+    .success {
       background: rgba(34, 197, 94, 0.1);
       border: 1px solid rgba(34, 197, 94, 0.2);
       color: #166534;
-      font-weight: 600;
+    }
+
+    .error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #991b1b;
+    }
+
+    .utility-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
     }
 
     footer {
@@ -210,6 +244,7 @@
 <body>
   <div class="container topbar">
     <a class="back-link" href="index.html">← Back to homepage</a>
+    <a class="back-link" href="account.html#orders">View my orders →</a>
   </div>
 
   <main class="container" id="pageContent">
@@ -218,6 +253,7 @@
       <h1>Place your custom wood order</h1>
       <p>
         Tell us what you want built and the size you need for your custom order.
+        Once submitted, the order will be saved to your account.
       </p>
     </section>
 
@@ -226,14 +262,20 @@
         <h2>Order form</h2>
         <p>Describe what you want and we’ll review your custom request.</p>
 
-        <form id="orderForm" action="https://formsubmit.co/595f97935bc2f953174f2be0d9c6793f" method="POST">
-          <input type="hidden" name="_subject" value="New Woodpecker Inc Order Request" />
-          <input type="hidden" name="_captcha" value="false" />
+        <div class="notice" id="authNotice"></div>
+        <div class="error" id="errorMessage"></div>
+        <div class="success" id="successMessage"></div>
 
+        <form id="orderForm">
           <div class="form-grid">
             <div class="field full">
               <label for="name">Full name</label>
               <input type="text" id="name" name="name" placeholder="Your name" required />
+            </div>
+
+            <div class="field full">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" readonly />
             </div>
 
             <div class="field full">
@@ -247,8 +289,7 @@
             </div>
           </div>
 
-          <button type="submit" class="btn">Submit Order Request</button>
-          <div class="success" id="successMessage">Your request is being sent.</div>
+          <button type="submit" class="btn" id="submitButton">Submit Order Request</button>
         </form>
       </div>
 
@@ -269,6 +310,14 @@
             <strong>Extra details</strong>
             Include appearance, inspiration, finish, or special features inside the description box.
           </div>
+          <div class="info-item">
+            <strong>Where it shows up</strong>
+            After you submit, the order will appear in your account page under My Orders.
+          </div>
+        </div>
+
+        <div class="utility-links">
+          <a class="back-link" href="account.html">Go to account</a>
         </div>
       </aside>
     </section>
@@ -278,41 +327,115 @@
     Woodpecker Inc • Managed by Vishwak Gaddam, Aranjay R., and Varnav Nidikonda
   </footer>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const urlToken = params.get('token');
-    const savedToken = sessionStorage.getItem('woodpecker_order_token');
-    const usedToken = sessionStorage.getItem('woodpecker_order_token_used');
+  <script type="module">
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    import { addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+    import { auth, db } from "./firebase-config.js";
+
     const form = document.getElementById('orderForm');
+    const submitButton = document.getElementById('submitButton');
+    const authNotice = document.getElementById('authNotice');
     const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
 
-    const validFirstVisit =
-      urlToken &&
-      savedToken &&
-      urlToken === savedToken &&
-      usedToken !== urlToken;
+    const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/595f97935bc2f953174f2be0d9c6793f';
+    let currentUser = null;
 
-    if (!validFirstVisit) {
-      document.body.innerHTML = `
-        <main style="min-height:100vh;display:grid;place-items:center;padding:2rem;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(180deg,#faf8f5 0%,#f7f5f2 100%);">
-          <div style="max-width:650px;background:white;border:1px solid #e5ded7;border-radius:28px;padding:2rem;box-shadow:0 16px 40px rgba(31,41,55,0.08);text-align:center;">
-            <h1 style="margin-top:0;font-size:2rem;">This order link has expired</h1>
-            <p style="color:#6b7280;font-size:1.05rem;">
-              Please go back to the homepage and click <strong>Order Now</strong> again to create a new link.
-            </p>
-            <a href="index.html" style="display:inline-block;margin-top:1rem;padding:0.95rem 1.35rem;border-radius:999px;background:#7c4a22;color:white;text-decoration:none;font-weight:800;">
-              Back to homepage
-            </a>
-          </div>
-        </main>
-      `;
-    } else {
-      sessionStorage.setItem('woodpecker_order_token_used', urlToken);
-
-      form.addEventListener('submit', function () {
-        successMessage.style.display = 'block';
-      });
+    function hideMessages() {
+      authNotice.style.display = 'none';
+      successMessage.style.display = 'none';
+      errorMessage.style.display = 'none';
     }
+
+    function requireSignIn() {
+      hideMessages();
+      authNotice.innerHTML = 'Please sign in before placing an order. <a href="account.html?next=order" style="color:inherit;text-decoration:underline;">Go to account</a>';
+      authNotice.style.display = 'block';
+      submitButton.disabled = true;
+      submitButton.style.opacity = '0.7';
+    }
+
+    function unlockForm() {
+      authNotice.style.display = 'none';
+      submitButton.disabled = false;
+      submitButton.style.opacity = '1';
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      currentUser = user;
+
+      if (!user) {
+        emailInput.value = '';
+        requireSignIn();
+        return;
+      }
+
+      unlockForm();
+      emailInput.value = user.email || '';
+      if (!nameInput.value && user.displayName) {
+        nameInput.value = user.displayName;
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideMessages();
+
+      if (!currentUser) {
+        requireSignIn();
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting...';
+
+      const orderData = {
+        customerName: nameInput.value.trim(),
+        customerEmail: currentUser.email || '',
+        dimensions: form.dimensions.value.trim(),
+        details: form.details.value.trim(),
+        status: 'submitted',
+        createdAt: serverTimestamp(),
+        userUid: currentUser.uid
+      };
+
+      try {
+        const docRef = await addDoc(collection(db, 'users', currentUser.uid, 'orders'), orderData);
+
+        const emailFormData = new FormData();
+        emailFormData.append('_subject', `New Woodpecker Inc Order Request (${docRef.id})`);
+        emailFormData.append('_captcha', 'false');
+        emailFormData.append('orderId', docRef.id);
+        emailFormData.append('customerName', orderData.customerName);
+        emailFormData.append('customerEmail', orderData.customerEmail);
+        emailFormData.append('dimensions', orderData.dimensions);
+        emailFormData.append('details', orderData.details);
+        emailFormData.append('uid', orderData.userUid);
+
+        await fetch(FORMSUBMIT_ENDPOINT, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: emailFormData
+        });
+
+        successMessage.innerHTML = `Order submitted successfully. Your order ID is <strong>${docRef.id}</strong>. You can now view it in <a href="account.html#orders" style="color:inherit;text-decoration:underline;">My Orders</a>.`;
+        successMessage.style.display = 'block';
+        form.reset();
+        emailInput.value = currentUser.email || '';
+        if (currentUser.displayName) {
+          nameInput.value = currentUser.displayName;
+        }
+      } catch (error) {
+        console.error(error);
+        errorMessage.textContent = error?.message || 'There was a problem submitting your order.';
+        errorMessage.style.display = 'block';
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Submit Order Request';
+      }
+    });
   </script>
 </body>
 </html>
