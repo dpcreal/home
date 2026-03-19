@@ -144,11 +144,6 @@
       resize: vertical;
     }
 
-    input[readonly] {
-      background: #f8f8f8;
-      color: var(--muted);
-    }
-
     input:focus, textarea:focus {
       outline: 2px solid rgba(124, 74, 34, 0.18);
       border-color: var(--primary);
@@ -274,11 +269,6 @@
             </div>
 
             <div class="field full">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" readonly />
-            </div>
-
-            <div class="field full">
               <label for="dimensions">Preferred dimensions</label>
               <input type="text" id="dimensions" name="dimensions" placeholder="Example: 48 in x 20 in x 30 in" />
             </div>
@@ -338,7 +328,6 @@
     const successMessage = document.getElementById('successMessage');
     const errorMessage = document.getElementById('errorMessage');
     const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
 
     const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/595f97935bc2f953174f2be0d9c6793f';
     let currentUser = null;
@@ -367,13 +356,11 @@
       currentUser = user;
 
       if (!user) {
-        emailInput.value = '';
         requireSignIn();
         return;
       }
 
       unlockForm();
-      emailInput.value = user.email || '';
       if (!nameInput.value && user.displayName) {
         nameInput.value = user.displayName;
       }
@@ -423,7 +410,6 @@
         successMessage.innerHTML = `Order submitted successfully. Your order ID is <strong>${docRef.id}</strong>. You can now view it in <a href="account.html#orders" style="color:inherit;text-decoration:underline;">My Orders</a>.`;
         successMessage.style.display = 'block';
         form.reset();
-        emailInput.value = currentUser.email || '';
         if (currentUser.displayName) {
           nameInput.value = currentUser.displayName;
         }
