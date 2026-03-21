@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Orders | Woodpecker Inc</title>
+  <style>
+    :root {
+      --bg: #f7f5f2;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #7c4a22;
+      --primary-dark: #5f3617;
+      --border: #e5ded7;
+      --shadow: 0 16px 40px rgba(31, 41, 55, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #faf8f5 0%, #f7f5f2 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(100% - 2rem, 1100px);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      padding: 1.25rem 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .hero {
+      padding: 1rem 0 2rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(124, 74, 34, 0.08);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin: 0 0 0.8rem;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1rem;
+    }
+
+    .message {
+      display: none;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 18px;
+      font-weight: 600;
+    }
+
+    .message.error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #991b1b;
+    }
+
+    .message.success {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      color: #166534;
+    }
+
+    .orders {
+      display: grid;
+      gap: 1rem;
+      padding-bottom: 2rem;
+    }
+
+    .order-card {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 1.2rem;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .order-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+
+    .order-id {
+      color: var(--muted);
+      font-size: 0.92rem;
+      word-break: break-all;
+    }
+
+    .meta {
+      display: grid;
+      gap: 0.45rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    select, button, textarea {
+      font: inherit;
+    }
+
+    select, textarea {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0.8rem 0.9rem;
+      background: white;
+      color: var(--text);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      margin-top: 0.75rem;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 0.85rem 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+  </style>
+</head>
+<body>
+  <div class="container topbar">
+    <a class="back-link" href="index.html">← Back to homepage</a>
+    <a class="back-link" href="account.html">My account →</a>
+  </div>
+
+  <main class="container">
+    <section class="hero">
+      <div class="tag">Manager View</div>
+      <h1>Manage orders</h1>
+      <p>Review customer requests, update status, and keep orders organized.</p>
+    </section>
+
+    <div class="panel">
+      <div class="message error" id="errorMessage"></div>
+      <div class="message success" id="successMessage"></div>
+      <div id="managerInfo">Checking permissions...</div>
+    </div>
+
+    <section class="orders" id="ordersList"></section>
+  </main>
+
+  <script type="module">
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    import {
+      collectionGroup,
+      getDocs,
+      orderBy,
+      query,
+      serverTimestamp,
+      updateDoc
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+    import { auth, db } from "./firebase-config.js";
+
+    const ADMIN_USERNAMES = ["vishwak", "aranjay", "varnav"];
+
+    const ordersList = document.getElementById("ordersList");
+    const managerInfo = document.getElementById("managerInfo");
+    const errorMessage = document.getElementById("errorMessage");
+    const successMessage = document.getElementById("successMessage");
+
+    function emailToUsername(email) {
+      return String(email || "").replace(/@woodpecker\\.local$/i, "");
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.style.display = "block";
+      successMessage.style.display = "none";
+    }
+
+    function showSuccess(message) {
+      successMessage.textContent = message;
+      successMessage.style.display = "block";
+      errorMessage.style.display = "none";
+    }
+
+    function statusLabel(status) {
+      const map = {
+        submitted: "Submitted",
+        reviewing: "Reviewing",
+        "in-progress": "In Progress",
+        ready: "Ready",
+        completed: "Completed",
+        cancelled: "Cancelled"
+      };
+      return map[status] || status;
+    }
+
+    async function loadOrders() {
+      ordersList.innerHTML = "<div class='panel'>Loading orders...</div>";
+
+      try {
+        const q = query(collectionGroup(db, "orders"), orderBy("createdAt", "desc"));
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+          ordersList.innerHTML = "<div class='panel'>No orders found.</div>";
+          return;
+        }
+
+        ordersList.innerHTML = "";
+
+        snapshot.forEach((docSnapshot) => {
+          const order = docSnapshot.data();
+          const card = document.createElement("article");
+          card.className = "order-card";
+
+          const createdAt = order.createdAt?.toDate
+            ? order.createdAt.toDate().toLocaleString()
+            : "Just now";
+
+          const status = order.status || "submitted";
+
+          card.innerHTML = `
+            <div class="order-top">
+              <div>
+                <strong>${escapeHtml(order.customerName || "Unnamed customer")}</strong>
+                <div class="order-id">Order ID: ${escapeHtml(docSnapshot.id)}</div>
+              </div>
+              <div><strong>${escapeHtml(statusLabel(status))}</strong></div>
+            </div>
+
+            <div class="meta">
+              <div><strong>User UID:</strong> ${escapeHtml(order.userUid || "")}</div>
+              <div><strong>Submitted:</strong> ${escapeHtml(createdAt)}</div>
+              <div><strong>Dimensions:</strong> ${escapeHtml(order.dimensions || "Not provided")}</div>
+            </div>
+
+            <div>
+              <strong>Request details</strong>
+              <div>${escapeHtml(order.details || "")}</div>
+            </div>
+          `;
+
+          const row = document.createElement("div");
+          row.className = "row";
+
+          const select = document.createElement("select");
+          [
+            "submitted",
+            "reviewing",
+            "in-progress",
+            "ready",
+            "completed",
+            "cancelled"
+          ].forEach((value) => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = statusLabel(value);
+            option.selected = value === status;
+            select.appendChild(option);
+          });
+
+          const note = document.createElement("textarea");
+          note.placeholder = "Optional admin note";
+          note.value = order.adminNote || "";
+
+          const button = document.createElement("button");
+          button.className = "btn";
+          button.textContent = "Save status";
+
+          button.addEventListener("click", async () => {
+            button.disabled = true;
+            button.textContent = "Saving...";
+
+            const newStatus = select.value;
+
+            try {
+              await updateDoc(docSnapshot.ref, {
+                status: newStatus,
+                progressLabel: statusLabel(newStatus),
+                canCancel: newStatus === "submitted" || newStatus === "reviewing",
+                adminNote: note.value.trim(),
+                statusUpdatedAt: serverTimestamp()
+              });
+
+              showSuccess("Order updated successfully.");
+            } catch (error) {
+              console.error(error);
+              showError("Could not update that order.");
+            } finally {
+              button.disabled = false;
+              button.textContent = "Save status";
+            }
+          });
+
+          row.appendChild(select);
+          row.appendChild(button);
+          card.appendChild(note);
+          card.appendChild(row);
+          ordersList.appendChild(card);
+        });
+      } catch (error) {
+        console.error(error);
+        showError("Could not load orders.");
+        ordersList.innerHTML = "";
+      }
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "account.html?mode=signin";
+        return;
+      }
+
+      const username = emailToUsername(user.email);
+
+      if (!ADMIN_USERNAMES.includes(username)) {
+        managerInfo.textContent = "You are signed in, but this account is not allowed to manage orders.";
+        ordersList.innerHTML = "";
+        return;
+      }
+
+      managerInfo.textContent = `Signed in as manager: ${username}`;
+      await loadOrders();
+    });
+  </script>
+</body>
+</html>
