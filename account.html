@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Account | Woodpecker Inc</title>
-  <meta
-    name="description"
-    content="Sign in to your Woodpecker Inc account and view your orders."
-  />
+  <meta name="description" content="Sign in to your Woodpecker Inc account and view your orders." />
   <style>
     :root {
       --bg: #f7f5f2;
@@ -30,14 +27,8 @@
       --radius-sm: 16px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -46,16 +37,8 @@
       line-height: 1.6;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .container {
-      width: min(100% - 2rem, var(--max));
-      margin: 0 auto;
-    }
-
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(100% - 2rem, var(--max)); margin: 0 auto; }
     .topbar {
       padding: 1.25rem 0;
       display: flex;
@@ -64,7 +47,6 @@
       align-items: center;
       flex-wrap: wrap;
     }
-
     .back-link {
       display: inline-flex;
       align-items: center;
@@ -72,11 +54,7 @@
       font-weight: 700;
       color: var(--primary);
     }
-
-    .hero {
-      padding: 1rem 0 2rem;
-    }
-
+    .hero { padding: 1rem 0 2rem; }
     .tag {
       display: inline-block;
       padding: 0.45rem 0.8rem;
@@ -87,31 +65,15 @@
       font-size: 0.9rem;
       margin-bottom: 1rem;
     }
-
     h1 {
       font-size: clamp(2.35rem, 5vw, 4rem);
       line-height: 1.05;
       letter-spacing: -0.04em;
       margin: 0 0 0.85rem;
     }
-
-    h2 {
-      margin: 0 0 0.65rem;
-      font-size: 1.45rem;
-    }
-
-    .hero p,
-    .panel p,
-    .subtle {
-      color: var(--muted);
-    }
-
-    .hero p {
-      font-size: 1.05rem;
-      max-width: 60ch;
-      margin: 0;
-    }
-
+    h2 { margin: 0 0 0.65rem; font-size: 1.45rem; }
+    .hero p, .panel p, .subtle { color: var(--muted); }
+    .hero p { font-size: 1.05rem; max-width: 60ch; margin: 0; }
     .layout {
       display: grid;
       grid-template-columns: 360px 1fr;
@@ -119,7 +81,6 @@
       padding-bottom: 3rem;
       align-items: start;
     }
-
     .panel {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -127,14 +88,12 @@
       padding: 1.5rem;
       box-shadow: var(--shadow);
     }
-
     .tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.65rem;
       margin-bottom: 1rem;
     }
-
     .tab {
       border: 1px solid var(--border);
       background: #fff;
@@ -145,30 +104,11 @@
       font-weight: 800;
       transition: 0.2s ease;
     }
-
-    .tab:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .tab.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-    }
-
-    .field {
-      display: grid;
-      gap: 0.45rem;
-      margin-bottom: 1rem;
-    }
-
-    label {
-      font-weight: 700;
-      font-size: 0.96rem;
-    }
-
-    input {
+    .tab:hover { border-color: var(--primary); color: var(--primary); }
+    .tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .field { display: grid; gap: 0.45rem; margin-bottom: 1rem; }
+    label { font-weight: 700; font-size: 0.96rem; }
+    input, textarea, select {
       width: 100%;
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
@@ -177,14 +117,11 @@
       color: var(--text);
       background: #fff;
     }
-
-    input:focus {
+    input:focus, textarea:focus, select:focus {
       outline: 2px solid rgba(124, 74, 34, 0.18);
       border-color: var(--primary);
     }
-
-    .btn,
-    .ghost-btn {
+    .btn, .ghost-btn, .danger-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -195,38 +132,23 @@
       font: inherit;
       cursor: pointer;
       transition: 0.2s ease;
+      text-decoration: none;
     }
-
-    .btn {
-      border: 0;
-      background: var(--primary);
-      color: white;
-      box-shadow: var(--shadow);
+    .btn { border: 0; background: var(--primary); color: white; box-shadow: var(--shadow); }
+    .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .ghost-btn { border: 1px solid var(--border); background: #fff; color: var(--text); }
+    .ghost-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .danger-btn {
+      border: 1px solid rgba(239,68,68,0.25);
+      background: rgba(239,68,68,0.08);
+      color: #991b1b;
     }
-
-    .btn:hover {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-    }
-
-    .btn:disabled,
-    .ghost-btn:disabled {
+    .danger-btn:hover { background: rgba(239,68,68,0.12); }
+    .btn:disabled, .ghost-btn:disabled, .danger-btn:disabled {
       opacity: 0.7;
       cursor: not-allowed;
       transform: none;
     }
-
-    .ghost-btn {
-      border: 1px solid var(--border);
-      background: #fff;
-      color: var(--text);
-    }
-
-    .ghost-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
     .message {
       display: none;
       margin-bottom: 1rem;
@@ -234,28 +156,10 @@
       border-radius: 18px;
       font-weight: 600;
     }
-
-    .message.success {
-      background: var(--success-bg);
-      border: 1px solid var(--success-border);
-      color: var(--success-text);
-    }
-
-    .message.error {
-      background: var(--error-bg);
-      border: 1px solid var(--error-border);
-      color: var(--error-text);
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .profile-card {
-      display: grid;
-      gap: 1rem;
-    }
-
+    .message.success { background: var(--success-bg); border: 1px solid var(--success-border); color: var(--success-text); }
+    .message.error { background: var(--error-bg); border: 1px solid var(--error-border); color: var(--error-text); }
+    .hidden { display: none !important; }
+    .profile-card { display: grid; gap: 1rem; }
     .profile-chip {
       display: inline-flex;
       align-items: center;
@@ -268,590 +172,18 @@
       font-weight: 700;
       font-size: 0.92rem;
     }
-
     .profile-stat-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.8rem;
     }
-
     .stat {
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       padding: 1rem;
       background: #fcfbfa;
     }
-
-    .stat strong {
-      display: block;
-      font-size: 1.15rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
+    .stat strong { display: block; font-size: 1.15rem; margin-bottom: 0.2rem; }
+    .stat span { color: var(--muted); font-size: 0.95rem; }
     .orders-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
-
-    .orders-list {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .order-card {
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 1.2rem;
-      background: #fff;
-      box-shadow: var(--shadow);
-    }
-
-    .order-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 0.8rem;
-    }
-
-    .order-id {
-      color: var(--muted);
-      font-size: 0.92rem;
-      word-break: break-all;
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.35rem 0.75rem;
-      border-radius: 999px;
-      background: rgba(34, 197, 94, 0.12);
-      color: #166534;
-      font-weight: 800;
-      text-transform: capitalize;
-      font-size: 0.88rem;
-      white-space: nowrap;
-    }
-
-    .order-meta {
-      display: grid;
-      gap: 0.45rem;
-      color: var(--muted);
-      margin-bottom: 0.8rem;
-    }
-
-    .order-detail {
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .empty-state {
-      border: 1px dashed var(--border);
-      border-radius: 22px;
-      padding: 1.4rem;
-      background: #fcfbfa;
-      color: var(--muted);
-    }
-
-    @media (max-width: 950px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .panel {
-        padding: 1.15rem;
-      }
-
-      .profile-stat-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container topbar">
-    <a class="back-link" href="index.html">← Back to homepage</a>
-    <a class="back-link" href="order.html">Place an order →</a>
-  </div>
-
-  <main class="container">
-    <section class="hero">
-      <div class="tag">Account & Orders</div>
-      <h1>Your Woodpecker account</h1>
-      <p>
-        Sign in to manage your profile and view the custom orders tied to your account.
-      </p>
-    </section>
-
-    <section class="layout">
-      <aside class="panel">
-        <div id="authPanel">
-          <div class="tabs">
-            <button class="tab active" id="signinTab" type="button">Sign in</button>
-            <button class="tab" id="signupTab" type="button">Create account</button>
-          </div>
-
-          <div class="message success" id="authSuccess"></div>
-          <div class="message error" id="authError"></div>
-
-          <form id="signinForm">
-            <h2>Welcome back</h2>
-            <p>Sign in with your username and password.</p>
-
-            <div class="field">
-              <label for="signinUsername">Username</label>
-              <input
-                type="text"
-                id="signinUsername"
-                placeholder="Enter your username"
-                autocomplete="username"
-                required
-              />
-            </div>
-
-            <div class="field">
-              <label for="signinPassword">Password</label>
-              <input
-                type="password"
-                id="signinPassword"
-                autocomplete="current-password"
-                required
-              />
-            </div>
-
-            <button class="btn" id="signinButton" type="submit">Sign in</button>
-          </form>
-
-          <form id="signupForm" class="hidden">
-            <h2>Create your account</h2>
-            <p>Create a Woodpecker account with your username and password.</p>
-
-            <div class="field">
-              <label for="signupName">Full name</label>
-              <input
-                type="text"
-                id="signupName"
-                placeholder="Enter your full name"
-                autocomplete="name"
-                required
-              />
-            </div>
-
-            <div class="field">
-              <label for="signupUsername">Username</label>
-              <input
-                type="text"
-                id="signupUsername"
-                placeholder="Choose a username"
-                autocomplete="username"
-                required
-              />
-            </div>
-
-            <div class="field">
-              <label for="signupPassword">Password</label>
-              <input
-                type="password"
-                id="signupPassword"
-                minlength="6"
-                autocomplete="new-password"
-                required
-              />
-            </div>
-
-            <button class="btn" id="signupButton" type="submit">Create account</button>
-          </form>
-        </div>
-
-        <div id="profilePanel" class="hidden">
-          <h2>Profile</h2>
-          <div class="profile-card">
-            <div class="profile-chip" id="profileChip">Signed in</div>
-
-            <div>
-              <strong id="profileName">—</strong><br />
-              <span id="profileUsername" style="color: var(--muted);"></span>
-            </div>
-
-            <div class="profile-stat-grid">
-              <div class="stat">
-                <strong id="orderCount">0</strong>
-                <span>Orders in account</span>
-              </div>
-              <div class="stat">
-                <strong id="accountState">Active</strong>
-                <span>Account status</span>
-              </div>
-            </div>
-
-            <a class="btn" href="order.html">Place a new order</a>
-            <button class="ghost-btn" type="button" id="logoutButton">Log out</button>
-          </div>
-        </div>
-      </aside>
-
-      <section class="panel" id="orders">
-        <div class="orders-head">
-          <div>
-            <h2 style="margin-bottom: 0.4rem;">My Orders</h2>
-            <p style="margin-bottom: 0;">Orders tied to your signed-in account appear here.</p>
-          </div>
-        </div>
-
-        <div class="message error" id="ordersError"></div>
-        <div class="orders-list" id="ordersList">
-          <div class="empty-state">Sign in to view your orders.</div>
-        </div>
-      </section>
-    </section>
-  </main>
-
-  <script type="module">
-    import {
-      createUserWithEmailAndPassword,
-      onAuthStateChanged,
-      signInWithEmailAndPassword,
-      signOut,
-      updateProfile
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-    import {
-      collection,
-      getDocs,
-      orderBy,
-      query
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-    import { auth, db } from "./firebase-config.js";
-
-    const params = new URLSearchParams(window.location.search);
-    const next = params.get("next");
-
-    const signinTab = document.getElementById("signinTab");
-    const signupTab = document.getElementById("signupTab");
-
-    const signinForm = document.getElementById("signinForm");
-    const signupForm = document.getElementById("signupForm");
-
-    const signinButton = document.getElementById("signinButton");
-    const signupButton = document.getElementById("signupButton");
-
-    const authPanel = document.getElementById("authPanel");
-    const profilePanel = document.getElementById("profilePanel");
-
-    const authSuccess = document.getElementById("authSuccess");
-    const authError = document.getElementById("authError");
-    const ordersError = document.getElementById("ordersError");
-
-    const ordersList = document.getElementById("ordersList");
-    const profileChip = document.getElementById("profileChip");
-    const profileName = document.getElementById("profileName");
-    const profileUsername = document.getElementById("profileUsername");
-    const orderCount = document.getElementById("orderCount");
-    const logoutButton = document.getElementById("logoutButton");
-
-    function showAuthTab(mode) {
-      const signInMode = mode === "signin";
-      signinTab.classList.toggle("active", signInMode);
-      signupTab.classList.toggle("active", !signInMode);
-      signinForm.classList.toggle("hidden", !signInMode);
-      signupForm.classList.toggle("hidden", signInMode);
-      hideMessages();
-    }
-
-    function hideMessages() {
-      authSuccess.style.display = "none";
-      authError.style.display = "none";
-      ordersError.style.display = "none";
-    }
-
-    function showAuthError(message) {
-      authError.textContent = message;
-      authError.style.display = "block";
-      authSuccess.style.display = "none";
-    }
-
-    function showAuthSuccess(message) {
-      authSuccess.textContent = message;
-      authSuccess.style.display = "block";
-      authError.style.display = "none";
-    }
-
-    function setButtonLoading(button, isLoading, textWhenIdle, loadingText) {
-      button.disabled = isLoading;
-      button.textContent = isLoading ? loadingText : textWhenIdle;
-    }
-
-    function sanitizeUsername(value) {
-      return value.trim().toLowerCase().replace(/@.*$/, "");
-    }
-
-    function isValidUsername(username) {
-      return /^[a-z0-9._-]{3,24}$/.test(username);
-    }
-
-    function buildWoodpeckerEmail(value) {
-      const username = sanitizeUsername(value);
-      return username ? `${username}@woodpecker.local` : "";
-    }
-
-    function emailToUsername(email) {
-      return String(email || "").replace(/@woodpecker\.local$/i, "");
-    }
-
-    function escapeHtml(value) {
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-    }
-
-    function friendlyAuthMessage(error) {
-      switch (error?.code) {
-        case "auth/email-already-in-use":
-          return "That username is already taken.";
-        case "auth/invalid-email":
-          return "That username is not valid.";
-        case "auth/weak-password":
-          return "Password must be at least 6 characters.";
-        case "auth/invalid-credential":
-        case "auth/user-not-found":
-        case "auth/wrong-password":
-          return "Wrong username or password.";
-        case "auth/too-many-requests":
-          return "Too many attempts. Try again in a little while.";
-        case "auth/network-request-failed":
-          return "Network error. Check your connection and try again.";
-        default:
-          return error?.message || "Something went wrong.";
-      }
-    }
-
-    function validateUsernameOrThrow(rawValue) {
-      const username = sanitizeUsername(rawValue);
-
-      if (!username) {
-        throw new Error("Please enter a username.");
-      }
-
-      if (!isValidUsername(username)) {
-        throw new Error(
-          "Username must be 3 to 24 characters and only use letters, numbers, periods, underscores, or dashes."
-        );
-      }
-
-      return username;
-    }
-
-    async function loadOrders(user) {
-      ordersError.style.display = "none";
-      ordersList.innerHTML = `<div class="empty-state">Loading your orders...</div>`;
-
-      try {
-        const q = query(
-          collection(db, "users", user.uid, "orders"),
-          orderBy("createdAt", "desc")
-        );
-
-        const snapshot = await getDocs(q);
-
-        if (snapshot.empty) {
-          orderCount.textContent = "0";
-          ordersList.innerHTML = `
-            <div class="empty-state">
-              You have no orders yet.
-              <a href="order.html" style="color: var(--primary); text-decoration: underline;">
-                Place your first order
-              </a>.
-            </div>
-          `;
-          return;
-        }
-
-        orderCount.textContent = String(snapshot.size);
-
-        const cards = snapshot.docs.map((docSnapshot) => {
-          const order = docSnapshot.data();
-
-          const createdAt = order.createdAt?.toDate
-            ? order.createdAt.toDate().toLocaleString()
-            : "Just now";
-
-          const customerName = escapeHtml(order.customerName || user.displayName || "Unnamed customer");
-          const dimensions = escapeHtml(order.dimensions || "Not provided");
-          const details = escapeHtml(order.details || "");
-          const status = escapeHtml(order.status || "submitted");
-
-          return `
-            <article class="order-card">
-              <div class="order-top">
-                <div>
-                  <strong>${customerName}</strong>
-                  <div class="order-id">Order ID: ${escapeHtml(docSnapshot.id)}</div>
-                </div>
-                <div class="status-pill">${status}</div>
-              </div>
-
-              <div class="order-meta">
-                <div><strong>Submitted:</strong> ${escapeHtml(createdAt)}</div>
-                <div><strong>Dimensions:</strong> ${dimensions}</div>
-              </div>
-
-              <div>
-                <strong>Request details</strong>
-                <div class="order-detail">${details}</div>
-              </div>
-            </article>
-          `;
-        }).join("");
-
-        ordersList.innerHTML = cards;
-      } catch (error) {
-        console.error(error);
-        orderCount.textContent = "0";
-        ordersList.innerHTML = `<div class="empty-state">We could not load your orders right now.</div>`;
-        ordersError.textContent = error?.message || "Unable to load orders.";
-        ordersError.style.display = "block";
-      }
-    }
-
-    signinTab.addEventListener("click", () => showAuthTab("signin"));
-    signupTab.addEventListener("click", () => showAuthTab("signup"));
-
-    signinForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      hideMessages();
-
-      try {
-        setButtonLoading(signinButton, true, "Sign in", "Signing in...");
-
-        const username = validateUsernameOrThrow(
-          document.getElementById("signinUsername").value
-        );
-        const password = document.getElementById("signinPassword").value;
-
-        if (!password) {
-          throw new Error("Please enter your password.");
-        }
-
-        const email = buildWoodpeckerEmail(username);
-        await signInWithEmailAndPassword(auth, email, password);
-
-        localStorage.setItem("woodpecker_last_username", username);
-        showAuthSuccess("Signed in successfully.");
-      } catch (error) {
-        console.error(error);
-        showAuthError(friendlyAuthMessage(error));
-      } finally {
-        setButtonLoading(signinButton, false, "Sign in", "Signing in...");
-      }
-    });
-
-    signupForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      hideMessages();
-
-      try {
-        setButtonLoading(signupButton, true, "Create account", "Creating account...");
-
-        const fullName = document.getElementById("signupName").value.trim();
-        const username = validateUsernameOrThrow(
-          document.getElementById("signupUsername").value
-        );
-        const password = document.getElementById("signupPassword").value;
-
-        if (!fullName) {
-          throw new Error("Please enter your full name.");
-        }
-
-        if (password.length < 6) {
-          throw new Error("Password must be at least 6 characters.");
-        }
-
-        const email = buildWoodpeckerEmail(username);
-        const credential = await createUserWithEmailAndPassword(auth, email, password);
-
-        await updateProfile(credential.user, {
-          displayName: fullName
-        });
-
-        localStorage.setItem("woodpecker_last_username", username);
-        showAuthSuccess("Account created successfully.");
-      } catch (error) {
-        console.error(error);
-        showAuthError(friendlyAuthMessage(error));
-      } finally {
-        setButtonLoading(signupButton, false, "Create account", "Creating account...");
-      }
-    });
-
-    logoutButton.addEventListener("click", async () => {
-      hideMessages();
-
-      try {
-        await signOut(auth);
-        showAuthSuccess("Logged out successfully.");
-        showAuthTab("signin");
-      } catch (error) {
-        console.error(error);
-        showAuthError("Could not log out right now.");
-      }
-    });
-
-    onAuthStateChanged(auth, async (user) => {
-      hideMessages();
-
-      if (!user) {
-        authPanel.classList.remove("hidden");
-        profilePanel.classList.add("hidden");
-        ordersList.innerHTML = `<div class="empty-state">Sign in to view your orders.</div>`;
-        orderCount.textContent = "0";
-
-        const savedUsername = localStorage.getItem("woodpecker_last_username");
-        if (savedUsername) {
-          const signinUsernameInput = document.getElementById("signinUsername");
-          if (signinUsernameInput && !signinUsernameInput.value) {
-            signinUsernameInput.value = savedUsername;
-          }
-        }
-
-        if (next === "order") {
-          showAuthError("Sign in first, then place your order.");
-        }
-
-        return;
-      }
-
-      authPanel.classList.add("hidden");
-      profilePanel.classList.remove("hidden");
-
-      const username = emailToUsername(user.email || "");
-      profileChip.textContent = user.displayName
-        ? `Signed in as ${user.displayName}`
-        : "Signed in";
-      profileName.textContent = user.displayName || "Woodpecker customer";
-      profileUsername.textContent = username ? `Username: ${username}` : "";
-
-      await loadOrders(user);
-
-      if (next === "order") {
-        window.location.href = "./order.html";
-      }
-    });
-  </script>
-</body>
 </html>
